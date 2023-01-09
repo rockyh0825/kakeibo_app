@@ -1,0 +1,15 @@
+<%= link_to "支出作成", new_outgo_path %>
+
+<% @outgos.each do |outgo| %>
+    <%= outgo.content %>
+<% end %>
+
+<%= month_calendar  events: @outgos do |date, events| %>
+    <%= date.day %>
+    <%= events %>
+    <% events.each do |event| %>
+        <div>
+            <%= event.content %>
+        </div>
+    <% end %>
+<% end %>
