@@ -13,6 +13,9 @@ class OutgosController < ApplicationController
   def index
     @outgos = current_user.outgos
     @cost = 0
+    if params[:that_day]
+      @outgo_day = Outgo.where(start_time: params[:that_day])
+    end
   end
 
   def edit

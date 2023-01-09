@@ -5,7 +5,7 @@
 <% end %>
 
 <%= month_calendar  events: @outgos do |date, events| %>
-    <%= date.day %>
+    <%= link_to date.day, outgos_path(that_day: date) %>
     <% events.each do |event| %>
         <% @cost += event.cost %>   
     <% end %>
@@ -13,4 +13,8 @@
         <span class="bad"><%= @cost %></span>
     </div>
     <% @cost = 0 %>
+<% end %>
+
+<% @outgo_day.each do |outgo_day| %>
+    <%= outgo_day.content %>
 <% end %>
