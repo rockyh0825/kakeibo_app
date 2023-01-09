@@ -6,10 +6,11 @@
 
 <%= month_calendar  events: @outgos do |date, events| %>
     <%= date.day %>
-    <%= events %>
     <% events.each do |event| %>
-        <div>
-            <%= event.content %>
-        </div>
+        <% @cost += event.cost %>   
     <% end %>
+    <div>
+        <span class="bad"><%= @cost %></span>
+    </div>
+    <% @cost = 0 %>
 <% end %>

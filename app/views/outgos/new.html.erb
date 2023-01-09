@@ -2,11 +2,10 @@
     <p>支出内容</p>
     <%= f.text_field :content %>
     <p>金額</p>
-    <%= f.number_field :cost, in: 1..20, step: 1 %>
+    <%= f.text_field :cost %>
     <p>日付</p>
-    <%= f.date_field :day %>
+    <%= f.date_field :start_time %>
     <p>ジャンル</p>
     <%= f.collection_select :genre_id, Genre.all, :id, :name %>
-    <%#= f.hidden_field :start_time, :value => DateTime.now %>
     <%= f.submit "確定" %>
 <% end %>

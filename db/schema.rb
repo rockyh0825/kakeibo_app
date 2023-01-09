@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2023_01_07_060057) do
   end
 
   create_table "outgos", force: :cascade do |t|
-    t.date "day"
     t.string "content"
     t.integer "genre_id"
     t.integer "user_id"
