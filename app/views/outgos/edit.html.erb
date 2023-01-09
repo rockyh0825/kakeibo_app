@@ -1,2 +1,11 @@
-<h1>Outgos#edit</h1>
-<p>Find me in app/views/outgos/edit.html.erb</p>
+<%= form_with model: @outgo do |f| %>
+    <p>支出内容</p>
+    <%= f.text_field :content %>
+    <p>金額</p>
+    <%= f.text_field :cost %>
+    <p>日付</p>
+    <%= f.date_field :start_time %>
+    <p>ジャンル</p>
+    <%= f.collection_select :genre_id, Genre.all, :id, :name %>
+    <%= f.submit "確定" %>
+<% end %>

@@ -1,8 +1,11 @@
 <%= link_to "支出作成", new_outgo_path %>
+<%= link_to "ジャンル追加", genres_path %>
 
 <% @outgos.each do |outgo| %>
     <%= outgo.content %>
 <% end %>
+<p>現在の所持金</p>
+<%= @asset %>
 
 <%= month_calendar  events: @outgos do |date, events| %>
     <%= link_to date.day, outgos_path(that_day: date) %>
@@ -15,6 +18,8 @@
     <% @cost = 0 %>
 <% end %>
 
-<% @outgo_day.each do |outgo_day| %>
-    <%= outgo_day.content %>
+<% if @outgo_day != nil %>
+    <% @outgo_day.each do |outgo_day| %>
+        <%= link_to outgo_day.content, outgo_path(outgo_day.id) %>
+    <% end %>
 <% end %>
