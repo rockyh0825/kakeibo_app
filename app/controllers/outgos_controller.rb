@@ -17,8 +17,10 @@ class OutgosController < ApplicationController
     @outgos.each do |outgo|
       @asset -= outgo.cost
     end
+    @outgo_genres = Outgo.where('extract(year from start_time) = ? AND extract(month from start_time) = ?', Time.now.year, Time.now.month)
     if params[:that_day]
       @outgo_day = Outgo.where(start_time: params[:that_day])
+      @outgo_genres = Outgo.where('extract(year from start_time) = ? AND extract(month from start_time) = ?', params[:that_day].to_date.year, params[:that_day].to_date.month)
     end
   end
 
@@ -33,6 +35,12 @@ class OutgosController < ApplicationController
   def update
     @outgo = Outgo.find(params[:id])
     @outgo.update(outgo_params)
+    redirect_to outgos_path
+  end
+
+  def destroy
+    @outgo = Outgo.find(params[:id])
+    @outgo.destroy
     redirect_to outgos_path
   end
 

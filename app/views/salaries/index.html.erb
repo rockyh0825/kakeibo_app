@@ -1,2 +1,14 @@
-<h1>Salaries#index</h1>
-<p>Find me in app/views/salaries/index.html.erb</p>
+<h1>収入一覧</h1>
+<% @salaries.each do |salary| %>
+    <%= salary.day.strftime("%Y年%m月") %>
+    <%= salary.price %>
+<% end %>
+<h2>収入登録</h2>
+<%= form_with model: @salary do |f| %>
+    <%= f.label "給与額" %>
+    <%= f.text_field :price %><br>
+    <%= f.label "給与日" %>
+    <%= f.text_field :year %>年
+    <%= f.text_field :month %>月
+    <%= f.submit "給与登録", class: "btn btn-success" %>
+<% end %>

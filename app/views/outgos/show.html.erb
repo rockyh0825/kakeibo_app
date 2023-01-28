@@ -2,3 +2,4 @@
 <%= @outgo.content %>
 <%= @outgo.cost %>
 <%= link_to "編集する", edit_outgo_path(@outgo.id) %>
+<%= link_to "削除する", outgo_path(@outgo.id), method: :delete, class:"btn btn-danger" %>

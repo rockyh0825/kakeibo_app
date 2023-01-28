@@ -11,12 +11,20 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "サインイン", new_user_session_path %>
-      <%= link_to "サインアップ", new_user_registration_path %>
-    <% end %>
+    <header>
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary" %>
+        <%= link_to "支出作成", new_outgo_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "ジャンル追加", genres_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "支出一覧", outgos_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "給与一覧", salaries_path, class: "btn btn-outline-secondary" %>
+      <% else %>
+        <%= link_to "サインイン", new_user_session_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "サインアップ", new_user_registration_path, class: "btn btn-outline-secondary" %>
+      <% end %>
+    </header>
     <%= yield %>
+    <footer>
+    </footer>
   </body>
 </html>

@@ -1,25 +1,44 @@
-<%= link_to "支出作成", new_outgo_path %>
-<%= link_to "ジャンル追加", genres_path %>
-
-<% @outgos.each do |outgo| %>
-    <%= outgo.content %>
-<% end %>
 <p>現在の所持金</p>
 <%= @asset %>
-
-<%= month_calendar  events: @outgos do |date, events| %>
-    <%= link_to date.day, outgos_path(that_day: date) %>
-    <% events.each do |event| %>
-        <% @cost += event.cost %>   
-    <% end %>
-    <div>
-        <span class="bad"><%= @cost %></span>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-8">
+            <%= month_calendar  events: @outgos do |date, events| %>
+                <%= link_to date.day, outgos_path(that_day: date), class:"text-secondary" %>
+                <% events.each do |event| %>
+                    <% @cost += event.cost %> 
+                <% end %>
+                <div>
+                    <span class="bad"><%= @cost %></span>
+                </div>
+                <% @cost = 0 %>
+            <% end %>
+        </div>
+        <div class="col-xl-4">
+            <% if @outgo_day != nil %>
+                <table class="table table-striped">
+                    <thead>
+                        <th>用途</th>
+                        <th>ジャンル</th>
+                        <th>金額</th>
+                        <th></th>   
+                    </thead>
+                    <tbody>
+                        <% @outgo_day.each do |outgo_day| %>
+                            <tr>
+                                <td><%= link_to outgo_day.content, outgo_path(outgo_day.id), class:"text-secondary" %></td>
+                                <td><%= outgo_day.genre.name %></td>
+                                <td><%= outgo_day.cost %></td>
+                                <td><%= link_to "削除する", outgo_path(outgo_day.id), method: :delete, class:"btn btn-danger" %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            <% end %>
+        </div>
     </div>
-    <% @cost = 0 %>
-<% end %>
+</div>
+<%= pie_chart @outgo_genres.joins(:genre).group("genres.name").sum(:cost), suffix: "円" %>
+<%#= line_chart Outgo.group_by_day_of_week(:start_time).sum(:cost) %>
 
-<% if @outgo_day != nil %>
-    <% @outgo_day.each do |outgo_day| %>
-        <%= link_to outgo_day.content, outgo_path(outgo_day.id) %>
-    <% end %>
-<% end %>
+<%= Date.today.strftime('%Y') %>
