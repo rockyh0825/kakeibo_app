@@ -9,3 +9,7 @@
     <%= f.collection_select :genre_id, Genre.all, :id, :name %>
     <%= f.submit "確定" %>
 <% end %>
+
+<%= form_with model: Outgo.new, url: outgos_ocr_path, method: :post do |f|%>
+    <%= f.submit "test" %>
+<% end %>

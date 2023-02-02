@@ -1,8 +1,33 @@
-<h1>収入一覧</h1>
-<% @salaries.each do |salary| %>
-    <%= salary.day.strftime("%Y年%m月") %>
-    <%= salary.price %>
+<%= form_tag(salaries_path, :method => 'get') do %>
+    <%= text_field_tag :search %>
+    <%= submit_tag '検索', :name => nil %>
 <% end %>
+<h1><%= @year %>年収入一覧</h1>
+<table>
+    <thead>
+        <tr>
+            <th>月</th>
+            <th>金額</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @salaries.each do |salary| %>
+            <tr>
+                <td><%= salary.day.strftime("%m月") %></td>
+                <%= form_with model: salary do |f| %>
+                    <td><%= f.text_field :price %></td>
+                    <td><%= f.submit "変更"%></td>
+                <% end %>
+                <td><%= link_to "削除する", salary_path(salary.id), method: :delete, class: "btn btn-danger"%></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<p><%= @asset %></p>
+<p>今年稼いで大丈夫な額<%= (1030000 - @asset)%></p>
+
 <h2>収入登録</h2>
 <%= form_with model: @salary do |f| %>
     <%= f.label "給与額" %>

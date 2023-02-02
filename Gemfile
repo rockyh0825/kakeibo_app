@@ -62,3 +62,5 @@ gem 'rails-i18n'
 gem 'chartkick'
 
 gem 'groupdate'
+
+gem 'rtesseract'

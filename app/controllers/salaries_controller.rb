@@ -1,14 +1,21 @@
 class SalariesController < ApplicationController
   def index
     @salary = Salary.new
-    @salaries = current_user.salaries
+    d = Date.today
+    @year = d.year.to_s
+    @asset = current_user.salaries.where("day BETWEEN ? AND ?", (d.year.to_s + "-01-01").to_date, (d.year.to_s + "-12-31").to_date).sum(:price)
+    if params[:search]
+      @year = params[:search].to_s
+      @salaries = current_user.salaries.where("day BETWEEN ? AND ?", (params[:search].to_s + "-01-01").to_date, (params[:search].to_s + "-12-31").to_date)
+    else  
+      @salaries = current_user.salaries.where("day BETWEEN ? AND ?", (d.year.to_s + "-01-01").to_date, (d.year.to_s + "-12-31").to_date)
+    end
   end
 
   def create
     @salary = Salary.new(salary_params)
     @salary.user_id = current_user.id
-    params[:year].class
-    @salary.day = (params[:year].to_s + "-" + params[:month].to_s + "-01").to_date
+    @salary.day = (params[:salary][:year].to_s + "-" + params[:salary][:month].to_s + "-01").to_date
     if @salary.save
       redirect_to salaries_path
     else
@@ -17,10 +24,16 @@ class SalariesController < ApplicationController
     end
   end
 
-  def edit
+  def update
+    @salary = Salary.find(params[:id])
+    @salary.update(salary_params)
+    redirect_to salaries_path
   end
 
-  def show
+  def destroy
+    @salary = Salary.find(params[:id])
+    @salary.destroy
+    redirect_to salaries_path
   end
 
   private

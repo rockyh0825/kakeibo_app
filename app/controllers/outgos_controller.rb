@@ -13,7 +13,7 @@ class OutgosController < ApplicationController
   def index
     @outgos = current_user.outgos
     @cost = 0
-    @asset = 0
+    @asset = current_user.salaries.sum(:price)
     @outgos.each do |outgo|
       @asset -= outgo.cost
     end
@@ -22,6 +22,13 @@ class OutgosController < ApplicationController
       @outgo_day = Outgo.where(start_time: params[:that_day])
       @outgo_genres = Outgo.where('extract(year from start_time) = ? AND extract(month from start_time) = ?', params[:that_day].to_date.year, params[:that_day].to_date.month)
     end
+  end
+
+  def ocr
+    # tesseract = Tesseract::Engine.new
+    # image = RTesseract.new("../assets/images/test.png")
+    # text = image.to_s
+    # redirect_to new_outgo_path
   end
 
   def show
