@@ -1,0 +1,9 @@
+<%= form_with model: @stuff, url: foodstuffs_confirm_path, method: :post do |f| %>
+    名前
+    <%= f.text_field :name %><br>
+    個数
+    <%= f.select :amount, *[1..10] %>
+    <%= f.hidden_field :stuffs, :value => @stuffs_new.to_json %>
+    <%= f.submit "追加", class: "btn btn-success" %>
+    <%= f.submit "追加しない", class: "btn btn-danger" %>
+<% end %>

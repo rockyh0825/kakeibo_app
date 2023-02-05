@@ -10,6 +10,10 @@
     <%= f.submit "確定" %>
 <% end %>
 
-<%= form_with model: Outgo.new, url: outgos_ocr_path, method: :post do |f|%>
+<%= form_with model: Foodstuff.new, url: foodstuffs_recognize_path, method: :post do |f| %>
+    <%= f.file_field :image %>
     <%= f.submit "test" %>
 <% end %>
+
+<%= @ans %>
+<%= @check %>

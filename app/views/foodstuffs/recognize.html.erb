@@ -1,0 +1,7 @@
+<p>画像の認識が完了しました</p>
+<%= @ans %>
+<%= @ans.to_json %>
+<%= form_with model: Foodstuff.new, url: foodstuffs_confirm_path, method: :post do |f| %>
+    <%= f.hidden_field :stuffs, :value => @ans.to_json %>
+    <%= f.submit "結果の確認", class: "btn btn-success"%>
+<% end %>

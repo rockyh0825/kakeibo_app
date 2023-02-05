@@ -6,4 +6,5 @@ class User < ApplicationRecord
   
   has_many :outgos
   has_many :salaries
+  has_many :foodstuffs
 end

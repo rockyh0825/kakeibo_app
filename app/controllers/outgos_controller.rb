@@ -1,5 +1,6 @@
 class OutgosController < ApplicationController
   def new
+    @text = ""
     @outgo = Outgo.new
   end
 
@@ -25,10 +26,31 @@ class OutgosController < ApplicationController
   end
 
   def ocr
-    # tesseract = Tesseract::Engine.new
-    # image = RTesseract.new("../assets/images/test.png")
-    # text = image.to_s
-    # redirect_to new_outgo_path
+    image = RTesseract.new("app/assets/images/test2.jpeg", lang: "jpn")
+    @text = image.to_s
+    @check = @text.chars
+    @ans = []
+    tmp = ""
+    n_flag = false
+    slash_flag = false
+    @check.each do |check|
+      if n_flag && check == "\n"
+        tmp = ""
+      elsif check == "\\"
+        slash_flag = true
+      elsif n_flag && slash_flag
+        @ans << tmp
+        tmp = ""
+        n_flag = false
+        slash_flag = false
+      elsif check == "\n"
+        n_flag = true
+      elsif n_flag
+        tmp += check
+      end
+    end
+    @outgo = Outgo.new
+    render :new
   end
 
   def show
