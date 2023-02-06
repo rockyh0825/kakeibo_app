@@ -2,6 +2,8 @@ class OutgosController < ApplicationController
   def new
     @text = ""
     @outgo = Outgo.new
+    @genre = Genre.new
+    @genres = Genre.all
   end
 
   def create
@@ -14,43 +16,12 @@ class OutgosController < ApplicationController
   def index
     @outgos = current_user.outgos
     @cost = 0
-    @asset = current_user.salaries.sum(:price)
-    @outgos.each do |outgo|
-      @asset -= outgo.cost
-    end
+    @asset = current_user.salaries.sum(:price) - current_user.outgos.sum(:cost)
     @outgo_genres = Outgo.where('extract(year from start_time) = ? AND extract(month from start_time) = ?', Time.now.year, Time.now.month)
     if params[:that_day]
       @outgo_day = Outgo.where(start_time: params[:that_day])
       @outgo_genres = Outgo.where('extract(year from start_time) = ? AND extract(month from start_time) = ?', params[:that_day].to_date.year, params[:that_day].to_date.month)
     end
-  end
-
-  def ocr
-    image = RTesseract.new("app/assets/images/test2.jpeg", lang: "jpn")
-    @text = image.to_s
-    @check = @text.chars
-    @ans = []
-    tmp = ""
-    n_flag = false
-    slash_flag = false
-    @check.each do |check|
-      if n_flag && check == "\n"
-        tmp = ""
-      elsif check == "\\"
-        slash_flag = true
-      elsif n_flag && slash_flag
-        @ans << tmp
-        tmp = ""
-        n_flag = false
-        slash_flag = false
-      elsif check == "\n"
-        n_flag = true
-      elsif n_flag
-        tmp += check
-      end
-    end
-    @outgo = Outgo.new
-    render :new
   end
 
   def show

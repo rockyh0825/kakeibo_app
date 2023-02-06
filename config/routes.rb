@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  get 'foodstuffs/index'
-  root to: "homes#top"
+  devise_scope :user do
+    root "devise/sessions#new"
+  end
   devise_for :users
   
   resources :salaries, only: [:index, :edit, :show, :create, :update, :destroy]
-  resources :genres, only: [:index, :create, :edit, :update]
+  resources :genres, only: [:create, :edit, :update, :destroy]
   post "outgos/ocr" => "outgos#ocr"
   resources :outgos, only: [:new, :index, :edit, :show, :create, :update, :destroy]
   post "foodstuffs/recognize" => "foodstuffs#recognize"

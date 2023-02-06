@@ -12,16 +12,65 @@
 
   <body>
     <header>
-      <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary" %>
-        <%= link_to "支出作成", new_outgo_path, class: "btn btn-outline-secondary" %>
-        <%= link_to "ジャンル追加", genres_path, class: "btn btn-outline-secondary" %>
-        <%= link_to "支出一覧", outgos_path, class: "btn btn-outline-secondary" %>
-        <%= link_to "給与一覧", salaries_path, class: "btn btn-outline-secondary" %>
-      <% else %>
-        <%= link_to "サインイン", new_user_session_path, class: "btn btn-outline-secondary" %>
-        <%= link_to "サインアップ", new_user_registration_path, class: "btn btn-outline-secondary" %>
-      <% end %>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <% if user_signed_in? %>
+            <%= link_to outgos_path, class: "nav-link text-light" do %>
+              <i class="fas fa-home"></i>わたしの家計簿
+            <% end %>
+          <% else %>
+            <%= link_to root_path, class: "nav-link text-light" do %>
+              <i class="fas fa-home"></i>わたしの家計簿
+            <% end %>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to new_outgo_path, class: "nav-link text-light" do %>
+                    <i class="fas fa-money-check-alt"></i>支出作成
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to outgos_path, class: "nav-link text-light" do %>
+                    <i class="fas fa-hand-holding-usd"></i>支出一覧
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to salaries_path, class: "nav-link text-light" do %>
+                  <i class="fas fa-piggy-bank"></i>給与一覧
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to foodstuffs_path, class: "nav-link text-light" do %>
+                  <i class="fas fa-utensils"></i>食材一覧
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to destroy_user_session_path, method: :delete, class: "nav-link text-light" do %>
+                  <i class="fas fa-sign-out-alt"></i>ログアウト
+                  <% end %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to new_user_session_path, class: "nav-link text-light" do %>
+                    <i class="fas fa-sign-in-alt"></i>サインイン
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to new_user_registration_path, class: "nav-link text-light" do %>
+                  <i class="fas fa-user-plus"></i>サインアップ
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
     <%= yield %>
     <footer>

@@ -1,9 +1,0 @@
-<% @genres.each do |genre| %>
-    <%= genre.name %>
-    <%= link_to "編集する", edit_genre_path(genre.id), class: "btn btn-success" %>
-<% end %>
-
-<%= form_with model: @genre do |f| %>
-    <%= f.text_field :name %>
-    <%= f.submit "作成", class: "btn btn-success" %>
-<% end %>

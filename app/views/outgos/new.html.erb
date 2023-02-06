@@ -1,19 +1,67 @@
-<%= form_with model: @outgo do |f| %>
-    <p>支出内容</p>
-    <%= f.text_field :content %>
-    <p>金額</p>
-    <%= f.text_field :cost %>
-    <p>日付</p>
-    <%= f.date_field :start_time %>
-    <p>ジャンル</p>
-    <%= f.collection_select :genre_id, Genre.all, :id, :name %>
-    <%= f.submit "確定" %>
-<% end %>
-
-<%= form_with model: Foodstuff.new, url: foodstuffs_recognize_path, method: :post do |f| %>
-    <%= f.file_field :image %>
-    <%= f.submit "test" %>
-<% end %>
-
-<%= @ans %>
-<%= @check %>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-xl-3">
+            <p class="font-weight-bold">支出追加</p>
+            <%= form_with model: @outgo do |f| %>
+                <table>
+                    <tr>
+                        <td class="my-auto"><p>支出内容</p></td>
+                        <td><%= f.text_field :content %></td>
+                    </tr>
+                    <tr>
+                        <td class="my-auto"><p>金額</p></td>
+                        <td><%= f.text_field :cost %></td>
+                    </tr>
+                    <tr>
+                        <td class="my-auto"><p>日付</p></td>
+                        <td><%= f.date_field :start_time %></td>
+                    </tr>
+                    <tr>
+                        <td class="my-auto"><p>ジャンル</p></td>
+                        <td><%= f.collection_select :genre_id, Genre.all, :id, :name %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><%= f.submit "確定", class: "btn btn-success" %></td>
+                    </tr>
+                </table>    
+            <% end %>
+        </div>
+        <div class="col-xl-4">
+            <p class="font-weight-bold">レシートデータの読み取り</p>
+            <%= form_with model: Foodstuff.new, url: foodstuffs_recognize_path, method: :post do |f| %>
+                <%= f.file_field :image, class: "my-2 mx-auto" %><br>
+                <%= f.submit "レシート解析", class: "my-2 mx-auto btn btn-success" %>
+            <% end %>
+        </div>
+        <div class="col-xl-5">
+            <div class="row mx-auto">
+                <%= form_with model: @genre do |f| %>
+                    <%= f.label :name, "ジャンル追加", class: "font-weight-bold" %><br>
+                    <%= f.text_field :name, class: "my-2 mx-auto" %>
+                    <%= f.submit "作成", class: "btn btn-success my-2 mx-auto" %>
+                <% end %>
+            </div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>ジャンル名</th>
+                        <th></th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <% @genres.each do |genre| %>
+                            <tr>
+                                <%= form_with model: genre, url: genre_path(genre.id), method: :patch do |f| %>
+                                    <td class="mx-auto"><%= f.text_field :name %></td>
+                                    <td class="mx-auto"><%= f.submit "名前変更", class: "btn btn-success" %></td>
+                                <% end %>
+                                <td class="mx-auto"><%= link_to "削除", genre_path(genre.id), method: :delete, class: "btn btn-danger" %></td>
+                            </tr> 
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
