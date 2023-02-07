@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><%= f.submit "確定", class: "btn btn-success" %></td>
+                        <td><%= f.submit "確定", class: "btn btn-outline-success" %></td>
                     </tr>
                 </table>    
             <% end %>
@@ -31,7 +31,7 @@
             <p class="font-weight-bold">レシートデータの読み取り</p>
             <%= form_with model: Foodstuff.new, url: foodstuffs_recognize_path, method: :post do |f| %>
                 <%= f.file_field :image, class: "my-2 mx-auto" %><br>
-                <%= f.submit "レシート解析", class: "my-2 mx-auto btn btn-success" %>
+                <%= f.submit "レシート解析", class: "my-2 mx-auto btn btn-outline-success" %>
             <% end %>
         </div>
         <div class="col-xl-5">
@@ -39,7 +39,7 @@
                 <%= form_with model: @genre do |f| %>
                     <%= f.label :name, "ジャンル追加", class: "font-weight-bold" %><br>
                     <%= f.text_field :name, class: "my-2 mx-auto" %>
-                    <%= f.submit "作成", class: "btn btn-success my-2 mx-auto" %>
+                    <%= f.submit "作成", class: "btn btn-outline-success my-2 mx-auto" %>
                 <% end %>
             </div>
             <div class="row">
@@ -50,14 +50,16 @@
                         <th></th>
                     </thead>
                     <tbody>
-                        <% @genres.each do |genre| %>
-                            <tr>
-                                <%= form_with model: genre, url: genre_path(genre.id), method: :patch do |f| %>
-                                    <td class="mx-auto"><%= f.text_field :name %></td>
-                                    <td class="mx-auto"><%= f.submit "名前変更", class: "btn btn-success" %></td>
-                                <% end %>
-                                <td class="mx-auto"><%= link_to "削除", genre_path(genre.id), method: :delete, class: "btn btn-danger" %></td>
-                            </tr> 
+                        <% if @genres != nil %>
+                            <% @genres.each do |genre| %>
+                                <tr>
+                                    <%= form_with model: genre, url: genre_path(genre.id), method: :patch do |f| %>
+                                        <td class="mx-auto"><%= f.text_field :name %></td>
+                                        <td class="mx-auto"><%= f.submit "名前変更", class: "btn btn-outline-success" %></td>
+                                    <% end %>
+                                    <td class="mx-auto"><%= link_to "削除", genre_path(genre.id), method: :delete, class: "btn btn-outline-danger" %></td>
+                                </tr> 
+                            <% end %>
                         <% end %>
                     </tbody>
                 </table>

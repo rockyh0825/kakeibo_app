@@ -3,12 +3,14 @@ class SalariesController < ApplicationController
     @salary = Salary.new
     d = Date.today
     @year = d.year.to_s
-    @asset = current_user.salaries.where("day BETWEEN ? AND ?", (d.year.to_s + "-01-01").to_date, (d.year.to_s + "-12-31").to_date).sum(:price)
+    @asset = 1030000 - current_user.salaries.where("day BETWEEN ? AND ?", (d.year.to_s + "-01-01").to_date, (d.year.to_s + "-12-31").to_date).sum(:price)
     if params[:search]
       @year = params[:search].to_s
       @salaries = current_user.salaries.where("day BETWEEN ? AND ?", (params[:search].to_s + "-01-01").to_date, (params[:search].to_s + "-12-31").to_date)
+      @salaries_order = @salaries.order(:day)
     else  
       @salaries = current_user.salaries.where("day BETWEEN ? AND ?", (d.year.to_s + "-01-01").to_date, (d.year.to_s + "-12-31").to_date)
+      @salaries_order = @salaries.order(:day)
     end
   end
 

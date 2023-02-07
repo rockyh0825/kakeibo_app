@@ -1,38 +1,50 @@
-<%= form_tag(salaries_path, :method => 'get') do %>
-    <%= text_field_tag :search %>
-    <%= submit_tag '検索', :name => nil %>
-<% end %>
-<h1><%= @year %>年収入一覧</h1>
-<table>
-    <thead>
-        <tr>
-            <th>月</th>
-            <th>金額</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @salaries.each do |salary| %>
-            <tr>
-                <td><%= salary.day.strftime("%m月") %></td>
-                <%= form_with model: salary do |f| %>
-                    <td><%= f.text_field :price %></td>
-                    <td><%= f.submit "変更"%></td>
-                <% end %>
-                <td><%= link_to "削除する", salary_path(salary.id), method: :delete, class: "btn btn-danger"%></td>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
-<p>今年稼いで大丈夫な額<%= (1030000 - @asset)%></p>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-xl-6">
+            <%= form_tag(salaries_path, :method => 'get') do %>
+                <%= text_field_tag :search %>年
+                <%= submit_tag '検索', :name => nil %>
+            <% end %>
+            <h3><%= @year %>年収入一覧</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>月</th>
+                        <th>金額</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @salaries_order.each do |salary| %>
+                        <tr>
+                            <td><%= salary.day.strftime("%m月") %></td>
+                            <%= form_with model: salary do |f| %>
+                                <td><%= f.text_field :price %></td>
+                                <td><%= f.submit "変更"%></td>
+                            <% end %>
+                            <td><%= link_to "削除する", salary_path(salary.id), method: :delete, class: "btn btn-outline-danger"%></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+            <p>今年稼いで大丈夫な額<%= @asset %>円</p>
+        </div>
+        <div class="col-xl-6">
+            <h3>収入登録</h3>
+            <%= form_with model: @salary do |f| %>
+                <%= f.label "給与額" %>
+                <%= f.text_field :price %><br>
+                <%= f.label "給与日" %>
+                <%= f.text_field :year %>年
+                <%= f.text_field :month %>月
+                <%= f.submit "給与登録", class: "btn btn-outline-success" %>
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+        <%= column_chart @salaries.group_by_month(:day, format: "%Y-%m").sum(:price)%>
+    </div>
+</div>
 
-<h2>収入登録</h2>
-<%= form_with model: @salary do |f| %>
-    <%= f.label "給与額" %>
-    <%= f.text_field :price %><br>
-    <%= f.label "給与日" %>
-    <%= f.text_field :year %>年
-    <%= f.text_field :month %>月
-    <%= f.submit "給与登録", class: "btn btn-success" %>
-<% end %>
+

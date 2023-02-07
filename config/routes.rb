@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   resources :outgos, only: [:new, :index, :edit, :show, :create, :update, :destroy]
   post "foodstuffs/recognize" => "foodstuffs#recognize"
   post "foodstuffs/confirm" => "foodstuffs#confirm"
-  resources :foodstuffs, only: [:index, :create]
+  resources :foodstuffs, only: [:index, :create, :update, :destroy]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

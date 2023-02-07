@@ -1,6 +1,7 @@
 class FoodstuffsController < ApplicationController
   def index
-    @foodstuffs = Foodstuff.all
+    @foodstuffs = Foodstuff.order(:created_at)
+    @foodstuff = Foodstuff.new
   end
 
   def recognize
@@ -45,6 +46,25 @@ class FoodstuffsController < ApplicationController
       @stuff.name = stuffs_old.first
       @stuffs_new = stuffs_old[1..]
     end
+  end
+
+  def create
+    foodstuff = Foodstuff.new(foodstuff_params)
+    foodstuff.user_id = current_user.id
+    foodstuff.save
+    redirect_to foodstuffs_path
+  end
+
+  def update
+    foodstuff = Foodstuff.find(params[:id])
+    foodstuff.update(foodstuff_params)
+    redirect_to foodstuffs_path
+  end
+
+  def destroy
+    foodstuff = Foodstuff.find(params[:id])
+    foodstuff.destroy
+    redirect_to foodstuffs_path
   end
 
   private

@@ -3,7 +3,7 @@ class OutgosController < ApplicationController
     @text = ""
     @outgo = Outgo.new
     @genre = Genre.new
-    @genres = Genre.all
+    @genres = current_user.genres
   end
 
   def create
