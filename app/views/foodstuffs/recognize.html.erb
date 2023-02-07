@@ -1,7 +1,21 @@
-<p>画像の認識が完了しました</p>
-<%= @ans %>
-<%= @ans.to_json %>
-<%= form_with model: Foodstuff.new, url: foodstuffs_confirm_path, method: :post do |f| %>
-    <%= f.hidden_field :stuffs, :value => @ans.to_json %>
-    <%= f.submit "結果の確認", class: "btn btn-success"%>
-<% end %>
+<div class="container">
+    <div class="row my-3 text-center">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h2 class="mr-3">画像の認識が完了しました!</h2><br>
+            <%= form_with model: Foodstuff.new, url: foodstuffs_confirm_path, method: :post do |f| %>
+                <%= f.hidden_field :stuffs, :value => @ans.to_json %>
+                <%= f.submit "結果の確認", class: "btn btn-outline-success"%>
+            <% end %>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row my-3">
+        <%= @ans %>
+    </div>
+</div>
+
+
+<!-- テスト用に表示 -->
+
+

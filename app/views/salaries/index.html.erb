@@ -1,11 +1,16 @@
 <div class="container mt-3">
     <div class="row">
+        <div class="mx-auto font-weight-bold">
+            今年稼いで大丈夫な額  <h1><%= @asset %>円<h1>
+        </div>
+    </div>
+    <div class="row my-3">
         <div class="col-xl-6">
             <%= form_tag(salaries_path, :method => 'get') do %>
                 <%= text_field_tag :search %>年
                 <%= submit_tag '検索', :name => nil %>
             <% end %>
-            <h3><%= @year %>年収入一覧</h3>
+            <h3 class="my-3"><%= @year %>年収入一覧</h3>
             <table>
                 <thead>
                     <tr>
@@ -21,14 +26,13 @@
                             <td><%= salary.day.strftime("%m月") %></td>
                             <%= form_with model: salary do |f| %>
                                 <td><%= f.text_field :price %></td>
-                                <td><%= f.submit "変更"%></td>
+                                <td><%= f.submit "変更", class: "btn btn-outline-success"%></td>
                             <% end %>
                             <td><%= link_to "削除する", salary_path(salary.id), method: :delete, class: "btn btn-outline-danger"%></td>
                         </tr>
                     <% end %>
                 </tbody>
             </table>
-            <p>今年稼いで大丈夫な額<%= @asset %>円</p>
         </div>
         <div class="col-xl-6">
             <h3>収入登録</h3>

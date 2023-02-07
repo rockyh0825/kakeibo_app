@@ -1,9 +1,17 @@
-<%= form_with model: @stuff, url: foodstuffs_confirm_path, method: :post do |f| %>
-    名前
-    <%= f.text_field :name %><br>
-    個数
-    <%= f.select :amount, *[1..10] %>
-    <%= f.hidden_field :stuffs, :value => @stuffs_new.to_json %>
-    <%= f.submit "追加", class: "btn btn-success" %>
-    <%= f.submit "追加しない", class: "btn btn-danger" %>
-<% end %>
+<div class="container">
+    <div class="row my-3 mx-5">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <%= form_with model: @stuff, url: foodstuffs_confirm_path, method: :post do |f| %>
+                <%= f.label :name, "名前",class: "font-weight-bold"%>
+                <%= f.text_field :name, class: "my-2" %><br>
+                <%= f.label :amount, "個数",class: "font-weight-bold"%>
+                <%= f.select :amount, *[1..10], class: "my-2" %><br>
+                <%= f.hidden_field :stuffs, :value => @stuffs_new.to_json %>
+                <%= f.submit "追加", class: "btn btn-outline-success mx-2 my-2" %>
+                <%= f.submit "追加しない", class: "btn btn-outline-danger mx-2 my-2" %>
+            <% end %>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>

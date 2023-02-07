@@ -5,9 +5,9 @@
             <table>
                 <thead>
                     <tr>
-                        <td>購入日</td>
-                        <td>名前</td>
-                        <td>個数</td>
+                        <td class="font-weight-bold">購入日</td>
+                        <td class="font-weight-bold">名前</td>
+                        <td class="font-weight-bold">個数</td>
                         <td></td>
                     </tr>
                 </thead>
@@ -33,11 +33,11 @@
             <table>
                 <%= form_with model: @foodstuff, url: foodstuffs_path, method: :post do |f| %>
                 <tr>
-                    <td>食材名</td>
+                    <td class="font-weight-bold">食材名</td>
                     <td><%= f.text_field :name %></td>
                 </tr>
                 <tr>
-                    <td>個数</td>
+                    <td class="font-weight-bold">個数</td>
                     <td><%= f.select :amount, *[1..10]%></td>
                 </tr>
                 <tr>

@@ -1,6 +1,9 @@
-<p>現在の所持金</p>
-<%= @asset %>
 <div class="container-fluid">
+    <div class="row">
+        <div class="mx-auto font-weight-bold">
+            現在の所持金  <h1><%= @asset %>円<h1>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-7">
             <%= month_calendar  events: @outgos do |date, events| %>
